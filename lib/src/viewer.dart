@@ -142,8 +142,7 @@ class _PDFViewerState extends State<PDFViewer> {
     }
   }
 
-  void onZoomChanged(double scale) =>
-      setState(() => _swipeEnabled = scale == 1.0);
+  void onZoomChanged(double scale) => setState(() => _swipeEnabled = scale == 1.0);
 
   Future<void> _loadPage() async {
     if (_pages![_pageNumber - 1] != null) return;
@@ -171,8 +170,7 @@ class _PDFViewerState extends State<PDFViewer> {
 
   Widget _drawIndicator() {
     final child = GestureDetector(
-        onTap:
-            widget.showPicker && widget.document.count > 1 ? _pickPage : null,
+        onTap: widget.showPicker && widget.document.count > 1 ? _pickPage : null,
         child: Container(
             padding: const EdgeInsets.only(
               top: 4.0,
@@ -181,13 +179,10 @@ class _PDFViewerState extends State<PDFViewer> {
               right: 16.0,
             ),
             decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(4.0),
-                color: widget.indicatorBackground),
+                borderRadius: BorderRadius.circular(4.0), color: widget.indicatorBackground),
             child: Text("$_pageNumber/${widget.document.count}",
                 style: TextStyle(
-                    color: widget.indicatorText,
-                    fontSize: 16.0,
-                    fontWeight: FontWeight.w400))));
+                    color: widget.indicatorText, fontSize: 16.0, fontWeight: FontWeight.w400))));
 
     switch (widget.indicatorPosition) {
       case IndicatorPosition.topLeft:
@@ -225,10 +220,9 @@ class _PDFViewerState extends State<PDFViewer> {
       body: Stack(
         children: <Widget>[
           PageView.builder(
-            physics:
-                _swipeEnabled && widget.enableSwipeNavigation && !_isLoading
-                    ? null
-                    : const NeverScrollableScrollPhysics(),
+            physics: _swipeEnabled && widget.enableSwipeNavigation && !_isLoading
+                ? null
+                : const NeverScrollableScrollPhysics(),
             onPageChanged: (page) {
               setState(() => _pageNumber = page + 1);
               _loadPage();
@@ -239,8 +233,7 @@ class _PDFViewerState extends State<PDFViewer> {
             itemCount: _pages?.length ?? 0,
             itemBuilder: (context, index) => _pages![index] == null
                 ? Center(
-                    child: widget.progressIndicator ??
-                        const CircularProgressIndicator.adaptive(),
+                    child: widget.progressIndicator ?? const CircularProgressIndicator.adaptive(),
                   )
                 : _pages![index]!,
           ),
@@ -262,7 +255,7 @@ class _PDFViewerState extends State<PDFViewer> {
             )
           : null,
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      bottomNavigationBar: (widget.showNavigation && widget.document.count > 1)
+      bottomNavigationBar: (widget.showNavigation)
           ? widget.navigationBuilder != null
               ? widget.navigationBuilder!(
                   context,
@@ -307,29 +300,27 @@ class _PDFViewerState extends State<PDFViewer> {
                         child: IconButton(
                           icon: const Icon(Icons.chevron_right),
                           tooltip: widget.tooltip.next,
-                          onPressed:
-                              _pageNumber == widget.document.count || _isLoading
-                                  ? null
-                                  : () {
-                                      _pageNumber++;
-                                      if (widget.document.count < _pageNumber) {
-                                        _pageNumber = widget.document.count;
-                                      }
-                                      _animateToPage();
-                                    },
+                          onPressed: _pageNumber == widget.document.count || _isLoading
+                              ? null
+                              : () {
+                                  _pageNumber++;
+                                  if (widget.document.count < _pageNumber) {
+                                    _pageNumber = widget.document.count;
+                                  }
+                                  _animateToPage();
+                                },
                         ),
                       ),
                       Expanded(
                         child: IconButton(
                           icon: const Icon(Icons.last_page),
                           tooltip: widget.tooltip.last,
-                          onPressed:
-                              _pageNumber == widget.document.count || _isLoading
-                                  ? null
-                                  : () {
-                                      _pageNumber = widget.document.count;
-                                      _jumpToPage();
-                                    },
+                          onPressed: _pageNumber == widget.document.count || _isLoading
+                              ? null
+                              : () {
+                                  _pageNumber = widget.document.count;
+                                  _jumpToPage();
+                                },
                         ),
                       ),
                     ],
